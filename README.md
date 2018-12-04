@@ -1,6 +1,9 @@
-# Handwritten Text Recognition with TensorFlow (Extended Version)
+# Line-level Handwritten Text Recognition with TensorFlow
 
-The model is a extended version of the Simple HTR system **@Harald Scheidl** implemented and can handle a full line of text image. Huge thanks to Harald Scheidl for his great works.
+![poster](https://i.imgur.com/vt0bTYr.png)
+
+This model is an extended version of the [Simple HTR](https://github.com/lamhoangtung/LineHTR) system implemented by [**@Harald Scheidl**](https://github.com/githubharald) and can handle a full line of text image. Huge thanks to [**@Harald Scheidl**](https://github.com/githubharald) for his great works.
+
 # How to run
 Go to the `src/` directory and run `python main.py` with these following arguments
 
@@ -12,20 +15,6 @@ Go to the `src/` directory and run `python main.py` with these following argumen
 * `--wordbeamsearch`: use word beam search decoding (only outputs words contained in a dictionary) instead of best path decoding. This is a custom TF operation and must be compiled from source, more information see corresponding section below. It should **not** be used when training the NN.
 
 ***I don't include any pretrained model in this branch so you will need to train the model on your data first***
-
-
-## Integrate word beam search decoding
-
-Follow these instructions to integrate word beam search decoding:
-
-1. Clone repository [CTCWordBeamSearch](https://github.com/githubharald/CTCWordBeamSearch).
-2. Compile custom TF operation (follow instructions given in README).
-3. Copy binary `TFWordBeamSearch.so` from the CTCWordBeamSearch repository to the `src/` directory of the SimpleHTR repository.
-
-Word beam search can now be enabled by setting the corresponding command line argument.
-The dictionary is created (in training and validation mode) by using all words contained in the IAM dataset (i.e. also including words from validation set) and is saved into the file `data/corpus.txt`.
-Further, the (manually created) list of word-characters can be found in the file `model/wordCharList.txt`.
-Beam width is set to 50 to conform with the beam width of vanilla beam search decoding.
 
 ## Train model 
 
@@ -71,7 +60,7 @@ If you need a better accuracy, here are some ideas how to improve it \[2\]:
 * Add more CNN layers or use transfer learning on CNN.
 * Replace Bi-LSTM by 2D-LSTM.
 * Replace optimizer: Adam improves the accuracy, however, the number of training epochs increases ([see discussion](https://github.com/githubharald/SimpleHTR/issues/27)).
-* Decoder: use token passing or word beam search decoding \[4\] (see [CTCWordBeamSearch](https://github.com/githubharald/CTCWordBeamSearch)) to constrain the output to dictionary words.
+* Decoder: use token passing or word beam search decoding \[3\] (see [CTCWordBeamSearch](https://github.com/githubharald/CTCWordBeamSearch)) to constrain the output to dictionary words.
 * Text correction: if the recognized word is not contained in a dictionary, search for the most similar one.
 
 Btw, don't hesitate to ask me anything via a `Github Issue` (See the [issue template file](ISSUE_TEMPLATE.md) for more details)
@@ -83,8 +72,6 @@ Btw, don't hesitate to ask me anything via a `Github Issue` (See the [issue temp
 
 \[2\] [Scheidl - Handwritten Text Recognition in Historical Documents](https://repositum.tuwien.ac.at/obvutwhs/download/pdf/2874742)
 
-\[3\] [Shi - An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition](https://arxiv.org/pdf/1507.05717.pdf)
+\[3\] [Scheidl - Word Beam Search: A Connectionist Temporal Classification Decoding Algorithm](https://repositum.tuwien.ac.at/obvutwoa/download/pdf/2774578)
 
-\[4\] [Scheidl - Word Beam Search: A Connectionist Temporal Classification Decoding Algorithm](https://repositum.tuwien.ac.at/obvutwoa/download/pdf/2774578)
-
-\[5\] [Marti - The IAM-database: an English sentence database for offline handwriting recognition](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database)
+\[4\] [Marti - The IAM-database: an English sentence database for offline handwriting recognition](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database)
