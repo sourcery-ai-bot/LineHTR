@@ -40,7 +40,7 @@ It's took me about 48 hours with about 13k images on a single GTX 1060 6GB to ge
 
 ### Overview
 
-The model is a extended version of the Simple HTR system **@Harald Scheidl** implemented
+The model is a extended version of the Simple HTR system [**@Harald Scheidl**](https://github.com/githubharald) implemented
 It consists of 7 CNN layers, 2 RNN (Bi-LSTM) layers and the CTC loss and decoding layer and can handle a full line of text image
 * The input image is a gray-value image and has a size of 800x64
 * 5 CNN layers map the input image to a feature sequence of size 100x512
@@ -48,6 +48,7 @@ It consists of 7 CNN layers, 2 RNN (Bi-LSTM) layers and the CTC loss and decodin
 * The CTC layer either calculates the loss value given the matrix and the ground-truth text (when training), or it decodes the matrix to the final text with best path decoding or beam search decoding (when inferring)
 * Batch size is set to 50
 
+Highest accuracy achieved is **0.84** on the private testset of the `Cinnamon AI Marathon 2018` competition (measure by Charater Error Rate - CER).
 
 
 ### Improve accuracy
