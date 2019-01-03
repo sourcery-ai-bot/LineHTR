@@ -43,7 +43,7 @@ It's took me about 48 hours with about 13k images on a single GTX 1060 6GB to ge
 The model is a extended version of the Simple HTR system [**@Harald Scheidl**](https://github.com/githubharald) implemented
 It consists of 7 CNN layers, 2 RNN (Bi-LSTM) layers and the CTC loss and decoding layer and can handle a full line of text image
 * The input image is a gray-value image and has a size of 800x64
-* 5 CNN layers map the input image to a feature sequence of size 100x512
+* 7 CNN layers map the input image to a feature sequence of size 100x512
 * 2 LSTM layers with 512 units propagate information through the sequence and map the sequence to a matrix of size 100x205. Each matrix-element represents a score for one of the 205 characters at one of the 100 time-steps
 * The CTC layer either calculates the loss value given the matrix and the ground-truth text (when training), or it decodes the matrix to the final text with best path decoding or beam search decoding (when inferring)
 * Batch size is set to 50
