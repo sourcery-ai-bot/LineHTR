@@ -112,7 +112,7 @@ def validate(model, loader):
     addressAccuracy = numWordOK / numWordTotal
     wordErrorRate = sum(totalWER)/len(totalWER)
     print('Character error rate: %f%%. Address accuracy: %f%%. Word error rate: %f%%' %
-          (charErrorRate*100.0, addressAccuracy*100.0, *100.0))
+          (charErrorRate*100.0, addressAccuracy*100.0, wordErrorRate*100.0))
     return charErrorRate, addressAccuracy, wordErrorRate
 
 
