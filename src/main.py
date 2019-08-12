@@ -40,15 +40,15 @@ def train(model, loader):
             print('Batch:', iterInfo[0], '/', iterInfo[1], 'Loss:', loss)
 
         # Validate
-        charErrorRate, addressAccuracy, wordErrorRate = validate(model, loader)
+        charErrorRate, textLineAccuracy, wordErrorRate = validate(model, loader)
         cer_summary = tf.Summary(value=[tf.Summary.Value(
             tag='charErrorRate', simple_value=charErrorRate)])  # Tensorboard: Track charErrorRate
         # Tensorboard: Add cer_summary to writer
         model.writer.add_summary(cer_summary, epoch)
-        address_summary = tf.Summary(value=[tf.Summary.Value(
-            tag='addressAccuracy', simple_value=addressAccuracy)])  # Tensorboard: Track addressAccuracy
-        # Tensorboard: Add address_summary to writer
-        model.writer.add_summary(address_summary, epoch)
+        text_line_summary = tf.Summary(value=[tf.Summary.Value(
+            tag='textLineAccuracy', simple_value=textLineAccuracy)])  # Tensorboard: Track textLineAccuracy
+        # Tensorboard: Add text_line_summary to writer
+        model.writer.add_summary(text_line_summary, epoch)
         wer_summary = tf.Summary(value=[tf.Summary.Value(
             tag='wordErrorRate', simple_value=wordErrorRate)])  # Tensorboard: Track wordErrorRate
         # Tensorboard: Add wer_summary to writer
@@ -108,12 +108,17 @@ def validate(model, loader):
                   batch.gtTexts[i] + '"', '->', '"' + recognized[i] + '"')
 
     # Print validation result
-    charErrorRate = sum(totalCER)/len(totalCER)
-    addressAccuracy = numWordOK / numWordTotal
-    wordErrorRate = sum(totalWER)/len(totalWER)
-    print('Character error rate: %f%%. Address accuracy: %f%%. Word error rate: %f%%' %
-          (charErrorRate*100.0, addressAccuracy*100.0, wordErrorRate*100.0))
-    return charErrorRate, addressAccuracy, wordErrorRate
+    try:
+        charErrorRate = sum(totalCER)/len(totalCER)
+        wordErrorRate = sum(totalWER)/len(totalWER)
+        textLineAccuracy = numWordOK / numWordTotal
+    except ZeroDivisionError:
+        charErrorRate = 0
+        wordErrorRate = 0
+        textLineAccuracy = 0
+    print('Character error rate: %f%%. Text line accuracy: %f%%. Word error rate: %f%%' %
+          (charErrorRate*100.0, textLineAccuracy*100.0, wordErrorRate*100.0))
+    return charErrorRate, textLineAccuracy, wordErrorRate
 
 
 def infer(model, fnImg):
