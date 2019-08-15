@@ -67,6 +67,8 @@ If you need a better accuracy, here are some ideas how to improve it \[2\]:
 Btw, don't hesitate to ask me anything via a `Github Issue` (See the [issue template file](ISSUE_TEMPLATE.md) for more details)
 
 
+BTW, big shout out to Sushant Gautam for extended this code for IAM dataset, he even provide pretrained model and web UI for inferences the model. Don't forget to check [his repo](https://github.com/sushant097/Handwritten-Line-Text-Recognition-using-Deep-Learning-with-Tensorflow) out. 
+
 ## References
 
 \[1\] [Build a Handwritten Text Recognition System using TensorFlow](https://towardsdatascience.com/2326a3487cd5)
