@@ -51,15 +51,17 @@ class DataLoader:
 
         # Read json lables file
         # Dataset folder should contain a labels.json file inside, with key is the file name of images and value is the label
-        with open(filePath + 'labels.json') as json_data:
+        with open(f'{filePath}labels.json') as json_data:
             label_file = json.load(json_data)
 
         # Log
         print("Loaded", len(label_file), "images")
 
         # Put sample into list
-        for fileName, gtText in label_file.items():
-            self.samples.append(Sample(gtText, filePath + fileName))
+        self.samples.extend(
+            Sample(gtText, filePath + fileName)
+            for fileName, gtText in label_file.items()
+        )
 
         self.charList = list(open(FilePaths.fnCharList).read())
 

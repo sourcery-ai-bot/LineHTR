@@ -199,8 +199,8 @@ class Model:
 
     def setupTF(self):
         """ Initialize TensorFlow """
-        print('Python: ' + sys.version)
-        print('Tensorflow: ' + tf.__version__)
+        print(f'Python: {sys.version}')
+        print(f'Tensorflow: {tf.__version__}')
         sess = tf.Session()  # Tensorflow session
         saver = tf.train.Saver(max_to_keep=5)  # Saver saves model to file
         modelDir = '../model/'
@@ -208,10 +208,10 @@ class Model:
             modelDir)  # Is there a saved model?
         # If model must be restored (for inference), there must be a snapshot
         if self.mustRestore and not latestSnapshot:
-            raise Exception('No saved model found in: ' + modelDir)
+            raise Exception(f'No saved model found in: {modelDir}')
         # Load saved model if available
         if latestSnapshot:
-            print('Init with stored values from ' + latestSnapshot)
+            print(f'Init with stored values from {latestSnapshot}')
             saver.restore(sess, latestSnapshot)
         else:
             print('Init with new values')
@@ -247,7 +247,7 @@ class Model:
     def decoderOutputToText(self, ctcOutput):
         """ Extract texts from output of CTC decoder """
         # Contains string of labels for each batch element
-        encodedLabelStrs = [[] for i in range(Model.batchSize)]
+        encodedLabelStrs = [[] for _ in range(Model.batchSize)]
         # Word beam search: label strings terminated by blank
         if self.decoderType == DecoderType.WordBeamSearch:
             blank = len(self.charList)
